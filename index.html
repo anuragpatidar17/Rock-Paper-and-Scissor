@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<title>Rock Paper Scissors</title>
+	<script type="text/javascript" src="assets/js/lib/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+
+<body>
+	
+	<header>
+		<h1>ROCK PAPER SCISSORS</h1>
+
+
+	
+	</header>
+
+<div class="score-board">
+	<div id="user-label" class="badge">user</div>
+	<div id="computer-label" class="badge">comp</div>
+	<span id="user-score">0</span>:<span id="computer-score">0</span>
+</div>
+
+
+	<div class="result">
+		<p>Lets Play!</p>
+	</div>
+
+
+<div class="choices">
+	<div class="choice" id="r">
+		<img src="Images/rock.png" alt="">
+	</div>
+	<div class="choice" id="p">
+		<img src="Images/paper.png" alt="">
+	</div>
+	<div class="choice" id="s">
+		<img src="Images/scissor.png" alt="">
+	</div>
+</div>
+
+	<p id="action-message">Make your Move</p>
+
+ 
+
+
+
+<script>
+	let userScore=0;
+let computerScore=0;
+
+const userScore_span=document.getElementById("user-score");
+const computerScore_span=document.getElementById("computer-score");
+
+const scoreBoard_div=document.querySelector(".score-board");
+const result_p=document.querySelector(".result > p");
+const rock_div=document.getElementById("r");
+const paper_div=document.getElementById("p");
+
+const scissors_div=document.getElementById("s");
+
+function getComputerChoice() {
+	const choices = ['r','p', 's'];
+	const randomNumber = Math.floor(Math.random() * 4);
+	return choices[randomNumber]; 
+}
+
+function converttoword(letter){
+	if( letter === "r") return "Rock";
+	if(letter === "p") return "Paper";
+	return "Scissors";
+
+}
+
+
+
+function win(userchoice, computerchoice){
+	const smalluserword = "user".fontsize(2).sub();
+	const smallcompword = "comp".fontsize(2).sub();
+	const userchoice_div = document.getElementById(userchoice);
+
+	userScore++;
+	userScore_span.innerHTML = userScore;
+	computerScore_span.innerHTML = computerScore;
+	
+	result_p.innerHTML = `${converttoword(userchoice)}${smalluserword}                                        Beats                                                  ${converttoword(computerchoice)}${smallcompword}  .You Win! `;
+	userchoice_div.classList.add('green-glow');
+	setTimeout(() => userchoice_div.classList.remove('green-glow'), 500 );
+
+
+}
+
+function lose(userchoice, computerchoice) {
+	const smalluserword = "user".fontsize(3).sub();
+	const smallcompword = "comp".fontsize(3).sub();
+	const userchoice_div = document.getElementById(userchoice);
+	
+	computerScore++;
+	userScore_span.innerHTML = userScore;
+	computerScore_span.innerHTML = computerScore;
+	
+	result_p.innerHTML = `${converttoword(userchoice)}${redsmallword}                                                                             
+	 Loses to                                       ${converttoword(computerchoice)}${smallcompword}  .You lost! `;
+	userchoice_div.classList.add('red-glow');
+	setTimeout(() => userchoice_div.classList.remove('red-glow'), 500);
+}
+
+
+
+function draw(userchoice, computerchoice) {
+     const smalluserword = "user".fontsize(3).sub();
+	const smallcompword = "comp".fontsize(3).sub();
+	const userchoice_div = document.getElementById(userchoice);
+	result_p.innerHTML = `${converttoword(userchoice)}${smalluserword}  
+	 Equals                             ${converttoword(computerchoice)}${smallcompword}  .Its a Draw! `;
+	userchoice_div.classList.add('gray-glow');
+	setTimeout(() => userchoice_div.classList.remove('gray-glow'), 500 );
+}
+
+
+
+ function game(userchoice){
+ 	const computerchoice = getComputerChoice();
+ 	
+ 	switch (userchoice + computerchoice){
+ 		case "rs":
+ 		case "pr":
+ 		case "sp":
+ 		win(userchoice, computerchoice);
+ 		break;
+
+ 		case "rp":
+ 		case "ps":
+ 		case "sr":
+ 		lose(userchoice, computerchoice);
+ 		break;
+
+ 		case "rr":
+ 		case "pp":
+ 		case "ss":
+ 		draw(userchoice, computerchoice);
+ 		break;
+
+ 	}
+ 	
+ }
+ 
+
+function main(){
+
+
+document.getElementById("r").addEventListener("click", () => game("r"));
+
+document.getElementById("p").addEventListener("click", () => game("p"));
+
+document.getElementById("s").addEventListener("click", () => game("s"));
+
+}
+main();
+
+
+</script>
+
+
+
+
+</body>
+</html>
